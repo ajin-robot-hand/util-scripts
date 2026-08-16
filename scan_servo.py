@@ -2,6 +2,8 @@ from dynamixel_sdk import *
 
 import sys, signal
 
+from control_table import ControlTable, DataLength
+
 
 def graceful_shutdown(signum, frame):
     global portHandler
@@ -41,21 +43,14 @@ BAUDRATES = [57600, 115200, 230400, 500000, 576000, 921600, 1000000, 1152000]
 DEVICENAME = '/dev/tty.usbserial-FTBINA6H'
 ID = 10
 
-ADDR_HARDWARE_ERROR_STATUS = 70   # 1 byte
-ADDR_PRESENT_VELOCITY = 128       # 4 byte
-ADDR_PRESENT_POSITION = 132       # 4 byte
-ADDR_PRESENT_INPUT_VOLTAGE = 144  # 2 byte, unit: 0.1V
-ADDR_PRESENT_TEMPERATURE = 146    # 1 byte, unit: degree Celsius
-ADDR_MOVING = 122                 # 1 byte
-
 # name -> [address, nByte, print formatter]
 STATUS_FIELDS = {
-    "Position": [ADDR_PRESENT_POSITION, 4, lambda v: f"  Position: {v}"],
-    "Velocity": [ADDR_PRESENT_VELOCITY, 4, lambda v: f"  Velocity: {v}"],
-    "Voltage": [ADDR_PRESENT_INPUT_VOLTAGE, 2, lambda v: f"  Voltage: {v / 10.0} V"],
-    "Temperature": [ADDR_PRESENT_TEMPERATURE, 1, lambda v: f"  Temperature: {v} C"],
-    "Moving": [ADDR_MOVING, 1, lambda v: f"  Moving: {bool(v)}"],
-    "Hardware Error Status": [ADDR_HARDWARE_ERROR_STATUS, 1, lambda v: f"  Hardware Error Status: {v}"],
+    "Position": [ControlTable.PRESENT_POSITION, DataLength.PRESENT_POSITION, lambda v: f"  Position: {v}"],
+    "Velocity": [ControlTable.PRESENT_VELOCITY, DataLength.PRESENT_VELOCITY, lambda v: f"  Velocity: {v}"],
+    "Voltage": [ControlTable.PRESENT_INPUT_VOLTAGE, DataLength.PRESENT_INPUT_VOLTAGE, lambda v: f"  Voltage: {v / 10.0} V"],
+    "Temperature": [ControlTable.PRESENT_TEMPERATURE, DataLength.PRESENT_TEMPERATURE, lambda v: f"  Temperature: {v} C"],
+    "Moving": [ControlTable.MOVING, DataLength.MOVING, lambda v: f"  Moving: {bool(v)}"],
+    "Hardware Error Status": [ControlTable.HARDWARE_ERROR_STATUS, DataLength.HARDWARE_ERROR_STATUS, lambda v: f"  Hardware Error Status: {v}"],
 }
 
 portHandler = PortHandler(DEVICENAME)
