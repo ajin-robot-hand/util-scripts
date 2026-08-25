@@ -38,10 +38,35 @@ def sendTxRx(packet:Protocol2PacketHandler, port:PortHandler, nByte:int, dxl_id:
 
 signal.signal(signal.SIGINT, graceful_shutdown)
 
+import argparse
+
+def get_default_port() -> str:
+    if sys.platform.startswith('win'):
+        return 'COM3'  # Windows 환경 기본값
+    elif sys.platform.startswith('darwin'):
+        return '/dev/tty.usbserial-FTBINA6H'  # Mac 환경 기본값 (기존 하드코딩 설정)
+    else:
+        return '/dev/ttyUSB0'  # Linux / WSL 환경 기본값
+
+
+parser = argparse.ArgumentParser(description="Scan Dynamixel Servos across baudrates and IDs.")
+parser.add_argument(
+    "-p", "--port",
+    default=get_default_port(),
+    help="Serial port device name (e.g., /dev/ttyUSB0 for WSL/Linux, COM3 for Windows, /dev/tty.usbserial-* for Mac)"
+)
+parser.add_argument(
+    "--max-id",
+    type=int,
+    default=10,
+    help="Maximum Dynamixel ID to scan (default: 10)"
+)
+args = parser.parse_args()
+
 PROTOCOL_VERSION = 2.0
 BAUDRATES = [57600, 115200, 230400, 500000, 576000, 921600, 1000000, 1152000]
-DEVICENAME = '/dev/tty.usbserial-FTBINA6H'
-ID = 10
+DEVICENAME = args.port
+ID = args.max_id
 
 # name -> [address, nByte, print formatter]
 STATUS_FIELDS = {

@@ -1,3 +1,12 @@
 .vscode
 .DS_Store
 __pycache__
+.vscode
+.DS_Store
+__pycache__/
+*.pyc
+
+# 가상환경 제외 (필수)
+.venv/
+venv/
+env/
