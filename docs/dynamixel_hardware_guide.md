@@ -1,3 +1,5 @@
+<img width="300" height="400" alt="1000060579" src="https://github.com/user-attachments/assets/51aa676c-7236-4ee5-8aa4-b0a16c2ef1c8" />
+
 # Dynamixel 제어 시스템 구축 및 안전 가이드
 
 ## 1. ⚠️ [중요] 하드웨어 안전 및 전원 관리
@@ -38,6 +40,7 @@
 - `XL430-W250-T` 모델의 'T'는 **3핀 TTL 통신**을 의미.
 - **연결 원칙:** 모터(3핀) ↔ 파워 허브 보드 TTL 포트(3핀) ↔ U2D2 TTL 포트(3핀)로 모든 데이터 경로를 통일해야 함.
 - _참고: 4핀 RS-485(차동 신호, 산업용) 및 4핀 UART(제어기-PC 디버깅용) 포트와 혼용 절대 불가._
+<img width="300" height="400" alt="1000060577" src="https://github.com/user-attachments/assets/4fc3ce66-aa0c-4dbd-8fc2-01d8a2f11237" />
 
 ### 2.2. 데이지 체인(Daisy-Chain) 버스 토폴로지
 
